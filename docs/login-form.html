@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ログインフォーム</title>
+</head>
+<body>
+    <h1>ログインフォーム</h1>
+    <label for="userId">ユーザーID：</label>
+    <input type="text" id="userId">
+
+    <br><br>
+
+    <label for="password">パスワード：</label>
+    <input type="password" id="password">
+
+    <br><br>
+
+    <button onclick="registerUser()">ユーザー登録</button>
+    <button onclick="loginUser()">ログイン</button>
+
+    <script>
+        var userList = []; // ユーザーリストを保持する配列
+
+        function registerUser() {
+            var userId = document.getElementById("userId").value;
+            var password = document.getElementById("password").value;
+
+            if (userList.includes(userId)) {
+                alert("そのユーザーIDは既に登録されています。別のユーザーIDを選択してください。");
+            } else {
+                userList.push(userId);
+                alert("ユーザーID: " + userId + " が登録されました。");
+            }
+        }
+
+        function loginUser() {
+            var userId = document.getElementById("userId").value;
+            var password = document.getElementById("password").value;
+
+            if (userList.includes(userId)) {
+                alert("ユーザーID: " + userId + " がログインしました。");
+            } else {
+                alert("ユーザーIDが登録されていません。ユーザー登録をしてください。");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -23,24 +23,26 @@
     <button onclick="postComment()">投稿</button>
     <div id="commentOutput"></div>
     <script>
-      var currentUserId = 1; // 現在のユーザーID（仮定）
+      var currentUserId = "ratte256"; // 現在のユーザーID
       var commentCounter = 1; // コメントを連番で管理するカウンター
 
       function postComment() {
           var comment = document.getElementById("comment").value;
-          var commentHtml = createCommentHtml(comment, currentUserId, commentCounter);
+          var currentDate = new Date();
+          var postTime = currentDate.getMonth() + 1 + "月/" + currentDate.getDate() + "日//" + currentDate.getHours() + ":" + currentDate.getMinutes();
+          var commentHtml = createCommentHtml(comment, currentUserId, postTime, commentCounter);
           document.getElementById("commentOutput").insertAdjacentHTML('beforeend', commentHtml);
           document.getElementById("comment").value = '';
           commentCounter++;
       }
 
-      function createCommentHtml(comment, userId, commentId) {
-          var commentHtml = '<div id="comment-' + commentId + '" style="border: 1px solid #ccc; padding: 10px; margin: 10px;">' + comment;
+      function createCommentHtml(comment, userId, postTime, commentId) {
+          var commentHtml = '<div id="comment-' + commentId + '" style="border: 1px solid #ccc; padding: 10px; margin: 10px;">[' + userId + '] : (' + comment + ') | 投稿日時と投稿時間: [' + postTime + ']';
 
           if (userId === currentUserId) {
-              commentHtml += ' <a href="#" onclick="deleteComment(' + commentId + ')">削除</a>';
+              commentHtml += ' | <a href="#" onclick="deleteComment(' + commentId + ')">削除</a>';
           } else {
-              commentHtml += ' <a href="#" onclick="reportComment(' + commentId + ')">報告</a>';
+              commentHtml += ' | <a href="#" onclick="reportComment(' + commentId + ')">報告</a>';
           }
 
           commentHtml += '</div>';
