@@ -22,11 +22,47 @@
     <button onclick="displayComment()">コメントを表示</button>
     <div id="commentOutput"></div>
     <script>
-      function displayComment() {
+      var currentUserId = 1; // 現在のユーザーID（仮定）
+      var commentCounter = 1; // コメントを連番で管理するカウンター
+
+      function postComment() {
           var comment = document.getElementById("comment").value;
-          var displayComment = '<div style="border: 1px solid #ccc; padding: 10px; margin: 10px;">' + comment + '</div>';
-          document.getElementById("commentOutput").innerHTML = displayComment;
+          var commentHtml = createCommentHtml(comment, currentUserId, commentCounter);
+          document.getElementById("commentOutput").insertAdjacentHTML('beforeend', commentHtml);
+          document.getElementById("comment").value = '';
+          commentCounter++;
       }
+
+      function createCommentHtml(comment, userId, commentId) {
+          var commentHtml = '<div id="comment-' + commentId + '" style="border: 1px solid #ccc; padding: 10px; margin: 10px;">' + comment;
+
+          if (userId === currentUserId) {
+              commentHtml += ' <a href="#" onclick="deleteComment(' + commentId + ')">削除</a>';
+          } else {
+              commentHtml += ' <a href="#" onclick="reportComment(' + commentId + ')">報告</a>';
+          }
+
+          commentHtml += '</div>';
+          return commentHtml;
+      }
+
+      function reportComment(commentId) {
+          // 報告処理（擬似的にアラート表示）
+          alert("コメントを報告しました。");
+      }
+
+      function deleteComment(commentId) {
+          var commentElement = document.getElementById("comment-" + commentId);
+          commentElement.parentNode.removeChild(commentElement);
+          alert("コメントを削除しました。");
+      }
+
+      document.getElementById("comment").addEventListener("keydown", function(event) {
+          if (event.ctrlKey && event.key === "Enter") {
+              postComment();
+          }
+      });
+
   </script>
 
     <hl>
